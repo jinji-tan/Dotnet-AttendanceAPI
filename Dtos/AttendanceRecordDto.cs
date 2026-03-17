@@ -11,7 +11,6 @@ public class AttendanceRecordDto
     public DateTime TimeIn { get; set; }
     public DateTime? TimeOut { get; set; }
     
-    // Formatting for Military Time representations
     public string TimeInStr => TimeIn.ToString("yyyy-MM-dd HH:mm:ss");
     public string TimeOutStr => TimeOut?.ToString("yyyy-MM-dd HH:mm:ss") ?? "N/A";
 
