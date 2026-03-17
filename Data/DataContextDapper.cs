@@ -23,7 +23,7 @@ namespace AttendanceAPI.Data
         {
             using DbConnection connection = new SqlConnection(config.GetConnectionString("DefaultConnection"));
 
-            return await connection.QueryFirstOrDefaultAsync<T>(sql, parameters);
+            return await connection.QuerySingleOrDefaultAsync<T>(sql, parameters);
         }
 
         public async Task<bool> Executesql(string sql, object? parameters = null)
@@ -31,6 +31,13 @@ namespace AttendanceAPI.Data
             using DbConnection connection = new SqlConnection(config.GetConnectionString("DefaultConnection"));
 
             return await connection.ExecuteAsync(sql, parameters) > 0;
+        }
+
+        public async Task<int> ExecuteSqlScalar(string sql, object? parameters = null)
+        {
+            using DbConnection connection = new SqlConnection(config.GetConnectionString("DefaultConnection"));
+
+            return await connection.ExecuteScalarAsync<int>(sql, parameters);
         }
     }
 }
