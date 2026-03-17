@@ -19,6 +19,13 @@ namespace AttendanceAPI.Data
             return await connection.QueryAsync<T>(sql);
         }
 
+        public async Task<IEnumerable<T>> LoadDataWitParameters<T>(string sql, object? parameters = null)
+        {
+            using DbConnection connection = new SqlConnection(config.GetConnectionString("DefaultConnection"));
+
+            return await connection.QueryAsync<T>(sql, parameters);
+        }
+
         public async Task<T?> LoadDataSingle<T>(string sql, object? parameters = null)
         {
             using DbConnection connection = new SqlConnection(config.GetConnectionString("DefaultConnection"));
@@ -26,11 +33,18 @@ namespace AttendanceAPI.Data
             return await connection.QuerySingleOrDefaultAsync<T>(sql, parameters);
         }
 
-        public async Task<bool> Executesql(string sql, object? parameters = null)
+        public async Task<bool> ExecuteSql(string sql, object? parameters = null)
         {
             using DbConnection connection = new SqlConnection(config.GetConnectionString("DefaultConnection"));
 
             return await connection.ExecuteAsync(sql, parameters) > 0;
+        }
+
+        public async Task<int> ExecuteSqlWithRowCount(string sql, object? parameters = null)
+        {
+            using DbConnection connection = new SqlConnection(config.GetConnectionString("DefaultConnection"));
+
+            return await connection.ExecuteAsync(sql, parameters);
         }
 
         public async Task<int> ExecuteSqlScalar(string sql, object? parameters = null)
