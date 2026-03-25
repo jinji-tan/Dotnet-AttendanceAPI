@@ -1,29 +1,84 @@
-# Attendance API Features
+# 📋 Attendance API
 
-The backend for the Attendance System is built using ASP.NET Core and Dapper.
+A robust backend for an Attendance Tracking System built with **ASP.NET Core**, **Dapper**, and **SQL Server**. This API provides secure user management, time-tracking capabilities, and detailed attendance reports.
 
-## FEATURES
+---
 
-### 1. User Management & Security
-- **Account Registration**: Create a new account with a unique username.
-- **Secure Login**: Authentication using JWT (JSON Web Tokens).
-- **Password Hashing**: Secure storage using BCrypt.
+## 🚀 Features
 
-### 2. Attendance Tracking
-- **Time In**: Start a new shift. The system prevents multiple active "Time In" sessions.
-- **Time Out**: End an active shift.
-- **Military Time**: All time tracking is stored and displayed in 24-hour formats.
+### 🔐 User Management & Security
+- **Secure Authentication**: Implementation of JWT (JSON Web Tokens) for stateless authentication.
+- **Identity Protection**: Password hashing using BCrypt for industry-standard security.
+- **Account Management**: Simple registration and login flow for users.
 
-### 3. Reporting & Analytics
-- **Daily Hours**: Automatically calculates total hours worked for the current day.
-- **Weekly Hours**: Calculates total hours worked from the start of the current week (Monday).
-- **Monthly Hours**: Calculates total hours worked for the current calendar month.
+### ⏱️ Attendance Tracking
+- **Smart Time-In/Out**: Prevent duplicate active sessions and ensure logical flow (must Time-In before Time-Out).
+- **Precision Logging**: All logs are handled with standard DateTime precision.
+- **Reporting**: Instant calculation of daily, weekly, and monthly work hours.
 
-### 4. Data Access
-- **Personal Records**: Users can view their own history of "Time In" and "Time Out" logs.
-- **Global Logs**: An endpoint is available to view all attendance records for the entire organization.
+### 📊 Data & Analytics
+- **Personal History**: Users can access their own full history of attendance records.
+- **Administrative Overview**: Endpoint available to view global logs for all users.
 
-<!-- REGISTER & LOGIN
-![LOGIN API Demo](Asset/)
-TOKEN
-![TOKEN API Demo](Asset/) -->
+---
+
+## 🛠️ API Endpoints
+
+### Authentication (`/api/Auth`)
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/register` | Register a new user account |
+| `POST` | `/login` | Authenticate and receive a JWT token |
+
+### Attendance (`/api/Attendance`)
+*Requires Bearer Token*
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/time-in` | Start a new work session |
+| `PUT` | `/time-out` | End the current active session |
+| `GET` | `/my-records` | Retrieve all attendance logs for the current user |
+| `GET` | `/my-hours` | Get work hour stats (Daily/Weekly/Monthly) |
+| `GET` | `/all-records` | View all attendance records (Global) |
+
+---
+
+## 📸 Visuals
+
+### API Interface (Swagger UI)
+![API Interface Demo](assets/api.png)
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- SQL Server
+
+### Setup
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd AttendanceAPI
+   ```
+2. **Configure the Database**:
+   Update the connection string in `appsettings.json`:
+   ```json
+   "ConnectionStrings": {
+     "DefaultConnection": "Server=YOUR_SERVER;Database=AttendanceDB;Trusted_Connection=True;"
+   }
+   ```
+3. **Run the Application**:
+   ```bash
+   dotnet run
+   ```
+4. **Access Swagger**:
+   Open `http://localhost:5000/swagger` (or your configured port) to interact with the API.
+
+---
+
+## 🏗️ Tech Stack
+- **Framework**: ASP.NET Core
+- **ORM**: Dapper (Micro-ORM)
+- **Security**: JWT & BCrypt.Net
+- **Documentation**: Swagger/OpenAPI
